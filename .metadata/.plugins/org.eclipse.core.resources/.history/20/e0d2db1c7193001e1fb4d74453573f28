@@ -1,0 +1,107 @@
+package com.dao;
+
+import java.util.List;
+
+import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+
+import com.model.User;
+
+public class UserDao {
+	private static HibernateTemplate hibernateTemplate;
+
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
+	public static void insertSeller(User u) {
+		try {
+			hibernateTemplate.save(u);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<User> sellerLogin(User s) {
+		List<User> s1 = null;
+		try {
+			List<?> resultList = hibernateTemplate.findByNamedParam(
+					"FROM User WHERE email = :email AND password = :password", new String[] { "email", "password" },
+					new Object[] { s.getEmail(), s.getPassword() });
+
+			// The raw list needs to be cast to List<User>
+			s1 = (List<User>) resultList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return s1;
+	}
+
+	public static void updateProfile(User s) {
+		try {
+			hibernateTemplate.update(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static boolean checkOldPassword(String op, int id) {
+		boolean flag = false;
+		try {
+			List<?> resultList = hibernateTemplate.findByNamedParam(
+					"FROM User WHERE password = :password AND id = :id", new String[] { "password", "id" },
+					new Object[] { op, id });
+
+			flag = !resultList.isEmpty();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	public static void updatePassword(String np, int id) {
+		try {
+			User seller = hibernateTemplate.get(User.class, id);
+			seller.setPassword(np);
+			hibernateTemplate.update(seller);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<User> getAllSellers() {
+		List<User> list = null;
+		try {
+			list = hibernateTemplate.loadAll(User.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public User getSellerById(int id) {
+		User seller = null;
+		try {
+			seller = hibernateTemplate.get(User.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return seller;
+	}
+
+	public void deleteSeller(int id) {
+		try {
+			User seller = hibernateTemplate.get(User.class, id);
+			if (seller != null) {
+				hibernateTemplate.delete(seller);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

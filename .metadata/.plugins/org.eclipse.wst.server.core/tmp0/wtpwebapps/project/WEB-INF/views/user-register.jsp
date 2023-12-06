@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form class="row g-3" action="UserController" method="post">
+
+		<div class="row">
+			<div class="col">
+				<input type="text" class="form-control" placeholder="First name"
+					aria-label="First name" name="fname">
+			</div>
+			<div class="col">
+				<input type="text" class="form-control" placeholder="Last name"
+					aria-label="Last name" name="lname">
+			</div>
+		</div>
+		<select class="form-select" aria-label="Default select example">
+			<option selected>Gender</option>
+			<option value="1">Male</option>
+			<option value="2">Female</option>
+			<option value="3">Other</option>
+		</select>
+
+		<div class="col-12">
+			<label for="inputAddress" class="form-label">Address</label> <input
+				type="text" class="form-control" id="inputAddress"
+				placeholder="1234 Main St" name="address">
+		</div>
+
+		<div class="mb-3">
+			<label for="formGroupExampleInput" class="form-label">Contact</label>
+			<input type="text" class="form-control" id="formGroupExampleInput"
+				name="contact" placeholder="Example input placeholder">
+		</div>
+		<div class="col-md-6">
+			<label for="inputEmail4" class="form-label">Email</label> <input
+				type="email" class="form-control" id="inputEmail4" name="email">
+		</div>
+		<div class="col-md-6">
+			<label for="inputPassword4" class="form-label">Password</label> <input
+				type="password" class="form-control" id="inputPassword4"
+				name="password">
+		</div>
+		<div class="col-md-6">
+			<label for="inputPassword4" class="form-label">Confirm
+				Password</label> <input type="password" class="form-control"
+				id="inputPassword4" name="cnfpassword">
+		</div>
+
+		<div class="col-12">
+			<button type="submit" name="action" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+package com.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.model.User;
+
+
+
+public class UserDao {
+	private SessionFactory sessionFactory;
+
+    public static void insertSeller(User u) {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(u);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Seller sellerLogin(Seller s) {
+        Seller s1 = null;
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        try (Session session = factory.openSession()) {
+            Query<Seller> query = session.createQuery("FROM Seller WHERE email = :email AND password = :password", Seller.class);
+            query.setParameter("email", s.getEmail());
+            query.setParameter("password", s.getPassword());
+            List<Seller> resultList = query.getResultList();
+            if (!resultList.isEmpty()) {
+                s1 = resultList.get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s1;
+    }
+
+    // Add similar methods for updateProfile, checkOldPassword, updatePassword, getAllSellers, getSellerById, deleteSeller
+    // using Hibernate API
+}
